@@ -3,30 +3,32 @@ import java.util.Scanner;
 
 public class Dijkstra{
 
-  public static final int N = 5;
+  public int N;
   //Arreglo de caminos
   public ArrayList<Camino> Caminos = new ArrayList<Camino>();
-  
+
   //Conjunto S = {}
   //El conjunto S va a almacenar indices de los nodos
   public ArrayList<Integer> S = new ArrayList<Integer>();
-  
+
   //Matriz de transicion del grafo T
   public int[][] grafo = new int[N][N];
-  
+
   //Arreglo de nodos = {a, b, c, d, e}
   public String[] nodos = new String[N];
-  
+
   //Arreglo D = {}
   public int[] D = new int[N];
-  
+
   //N-S
   public ArrayList<Integer> NS = new ArrayList<Integer>();
 
   //Constructor
-  public Dijkstra(int[][] grafo, String[] nodos){
+  //Constructor
+  public Dijkstra(int[][] grafo, String[] nodos, int N){
     this.grafo = grafo;
     this.nodos = nodos;
+    this.N = N;
   }
 
   private void N_menos_S(){
@@ -93,46 +95,46 @@ public class Dijkstra{
   public static void main(String[] args){
       Scanner scan = new Scanner(System.in);
       int n;
-      
+
       System.out.println("\tIngrese el grafo \n");
       System.out.println("Numero de vertices: \n");
       n = scan.nextInt();
-      
+
       int[][] grafo = new int[n][n];
       String[] nodos = new String[n];
-      
+
       for(int i = 0; i < n; i++){
           System.out.println("Ingrese el vertice " + i + "\n");
           nodos[i] = scan.next();
       }
-      
+
       System.out.print("\nN: { ");
       for(int i = 0; i < n; i++){
           System.out.print(nodos[i] + " ");
       }
       System.out.println("}\n");
-      
+
       for(int i = 0; i < n; i++){
           for(int j = 0; j < n; j++){
-            
+
             if(i != j){
                 System.out.println("Conectar nodo " + nodos[i] + " con nodo " + nodos[j] + "? s/n\n");
-                
+
                 if(scan.next().startsWith("s")){
                     System.out.println("Ingrese el peso de la arista: \n");
                     grafo[i][j] = scan.nextInt();
                 }
-                
+
                 else{
                     grafo[i][j] = -1;
                 }
             }
         }
     }
-      
+
       Dijkstra main = new Dijkstra(grafo, nodos, n);
       main.Djk();
-      
+
       /*for(int i = 0; i < n; i++){
           for(int j = 0; j < n; j++){
             System.out.print(grafo[i][j] + " ");
