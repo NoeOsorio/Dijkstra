@@ -1,63 +1,77 @@
-
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Dijkstra{
 
-  public int N;
-  
+  public static final int N = 5;
   //Arreglo de caminos
   public ArrayList<Camino> Caminos = new ArrayList<Camino>();
   
   //Conjunto S = {}
-  public ArrayList<String> S = new ArrayList<String>();
+  //El conjunto S va a almacenar indices de los nodos
+  public ArrayList<Integer> S = new ArrayList<Integer>();
   
-  //Matriz de transicion del grafo
+  //Matriz de transicion del grafo T
   public int[][] grafo = new int[N][N];
   
   //Arreglo de nodos = {a, b, c, d, e}
-  public String[] nodos = new String[N]; 
+  public String[] nodos = new String[N];
   
   //Arreglo D = {}
   public int[] D = new int[N];
   
   //N-S
-  public ArrayList<String> NS = new ArrayList<String>();
+  public ArrayList<Integer> NS = new ArrayList<Integer>();
 
   //Constructor
-  public Dijkstra(int[][] grafo, String[] nodos, int N){
+  public Dijkstra(int[][] grafo, String[] nodos){
     this.grafo = grafo;
     this.nodos = nodos;
-    this.N = N;
   }
 
   private void N_menos_S(){
     NS.clear();
     for(int i = 0; i < nodos.length;i++){
-      if(!this.S.contains(this.nodos[i]))
-        NS.add(this.nodos[i]);
+      //Si S no contiene el indice, entonces agrega el indice a NS
+      if(!this.S.contains(i))
+        NS.add(i);
     }
   }
+  public int vertMinimo(){
+      int vertice = -1;
+      //Si D esta vacio entonces el minimo no existe (-1)
+      if(D.length > 0){
+        vertice = D[0];
+        if(D.length > 1){
+          for(int i = 1; i < this.D.length;i++){
+            if(vertice > D[i])
+              vertice = D[i];
 
-  public String vertMinimo(){
-      String vertice = "";
-      //necesitamos hacer el algoritmo para calcula el vertice minimo
-
+          }
+        }
+      }
       return vertice;
+  }
+  public static int min(int a, int b){
+    int minimo;
+    if(a<=b)
+      minimo = a;
+    else
+      minimo = b;
+    return minimo;
   }
 
   //Algoritmo principal Dijkstra Mejorado "Wink wink"
   public void Djk(){
-    String w;
+    int w;
     //S <- {a} //Nodo inicial
-    this.S.add(this.nodos[0]);
+    this.S.add(1);
     //para i <- 2 hasta (n - 1) hacer
-    for (int i = 2; i < N; i++)
+    for (int i = 2; i < N;i++)
       //D[i] <- T[1][i]
       D[i] = this.grafo[1][i];
     //para 1 <- 1 hasta n-1 hacer
-    for (int i = 1; i < N-1; i++){
+    for (int i = 1;i < N-1; i++){
       //Esto hace la operacion N-S
       this.N_menos_S();
       //Elige un vertice w tal que D[w] sea un minimo
@@ -66,9 +80,14 @@ public class Dijkstra{
       this.S.add(w);
       //para cada vertice y en N-S hacer
       this.N_menos_S();
+      for (int v = 0; v < NS.size();i++){
+        D[v] = min(D[v], D[w] + grafo[w][v]);
+      }
 
     }
   }
+
+
 
 
   public static void main(String[] args){
