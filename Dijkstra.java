@@ -23,19 +23,19 @@ public class Dijkstra{
   public static ArrayList<Integer> S = new ArrayList<Integer>();
   
   //Matriz de transicion del grafo T
-  public int[][] grafo = new int[N][N];
+  public double[][] grafo = new double[N][N];
   
   //Arreglo de nodos = {a, b, c, d, e}
   public String[] nodos = new String[N];
   
   //Arreglo D = {}
-  public int[] D = new int[N];
+  public double[] D = new double[N];
   
   //N-S
   public ArrayList<Integer> NS = new ArrayList<Integer>();
 
   //Constructor
-  public Dijkstra(int[][] grafo, String[] nodos){
+  public Dijkstra(double[][] grafo, String[] nodos){
     this.grafo = grafo;
     this.nodos = nodos;
   }
@@ -63,8 +63,8 @@ public class Dijkstra{
       }
       return vertice;
   }
-  public static int min(int a, int b){
-    int minimo;
+  public static double min(double a, double b){
+    double minimo;
     if(a<=b)
       minimo = a;
     else
@@ -86,28 +86,23 @@ public class Dijkstra{
   public void Djk(int s, int n){
     int w;
     n=n-1;
-    //S <- {a} //Nodo inicial
+    
     this.S.add(s);
-    //para i <- 2 hasta (n - 1) hacer
+    
     for (int i = 0; i <= n;i++)
-      //D[i] <- T[1][i]
       D[i] = this.grafo[s][i];
-    //para 1 <- 1 hasta n-1 hacer
+    
     for (int i = 0;i < n; i++){
-      //Esto hace la operacion N-S
       this.N_menos_S();
-      //Elige un vertice w tal que D[w] sea un minimo
+      
       w = this.vertMinimo();
-      //agrega w a S
       this.S.add(w);
-      //para cada vertice y en N-S hacer
       this.N_menos_S();
-      for (int v = 0; v < D.length;v++){
-        if(grafo[w][v]!=-1)
-            if(D[v]!=-1)
-                D[v] = min(D[v], D[w] + grafo[w][v]);
-            else D[v] = D[w]+grafo[w][v];
+      
+      for (int v = 0; v < D.length; v++){
+       D[v] = min(D[v], D[w] + grafo[w][v]);
         //shortestPath(w,v,s);
+        
       }
     }
     for(int v=0; v<D.length;v++)
@@ -118,15 +113,16 @@ public class Dijkstra{
 
   public static void main(String[] args){
       int n=5;
-      int[][] grafo = new int[n][n];
-      String[] nodos = new String[n];
+      double[][] grafo = new double[n][n];
+      String[] nodos= new String[n];
       /*Scanner scan = new Scanner(System.in);
-      int n;
+      int n, s, f;
       
       System.out.println("\tIngrese el grafo \n");
       System.out.println("Numero de vertices: \n");
       n = scan.nextInt();
-      
+      nodos = new String[n];
+      grafo = new double[n][n];
       
       for(int i = 0; i < n; i++){
           System.out.println("Ingrese el vertice " + i + "\n");
@@ -141,7 +137,6 @@ public class Dijkstra{
       
       for(int i = 0; i < n; i++){
           for(int j = 0; j < n; j++){
-            
             if(i != j){
                 System.out.println("Conectar nodo " + nodos[i] + " con nodo " + nodos[j] + "? s/n\n");
                 
@@ -150,41 +145,41 @@ public class Dijkstra{
                     grafo[i][j] = scan.nextInt();
                 }
                 
-                else{
-                    grafo[i][j] = -1;
+                else if(scan.next().startsWith("n")){
+                    grafo[i][j] =Double.POSITIVE_INFINITY;
                 }
             }
         }
-    }**/
-    
+    }
+    */
       grafo[0][0]=0;
       grafo[0][1]=10;
-      grafo[0][2]=-1;
+      grafo[0][2]=Double.POSITIVE_INFINITY;
       grafo[0][3]=30;
       grafo[0][4]=100;
       
-      grafo[1][0]=-1;
+      grafo[1][0]=Double.POSITIVE_INFINITY;
       grafo[1][1]=0;
       grafo[1][2]=50;
-      grafo[1][3]=-1;
-      grafo[1][4]=-1;
+      grafo[1][3]=Double.POSITIVE_INFINITY;
+      grafo[1][4]=Double.POSITIVE_INFINITY;
       
-      grafo[2][0]=-1;
-      grafo[2][1]=-1;
+      grafo[2][0]=Double.POSITIVE_INFINITY;
+      grafo[2][1]=Double.POSITIVE_INFINITY;
       grafo[2][2]=0;
-      grafo[2][3]=-1;
+      grafo[2][3]=Double.POSITIVE_INFINITY;
       grafo[2][4]=10;
       
-      grafo[3][0]=-1;
-      grafo[3][1]=-1;
+      grafo[3][0]=Double.POSITIVE_INFINITY;
+      grafo[3][1]=Double.POSITIVE_INFINITY;
       grafo[3][2]=20;
       grafo[3][3]=0;
       grafo[3][4]=60;
       
-      grafo[4][0]=-1;
-      grafo[4][1]=-1;
-      grafo[4][2]=-1;
-      grafo[4][3]=-1;
+      grafo[4][0]=Double.POSITIVE_INFINITY;
+      grafo[4][1]=Double.POSITIVE_INFINITY;
+      grafo[4][2]=Double.POSITIVE_INFINITY;
+      grafo[4][3]=Double.POSITIVE_INFINITY;
       grafo[4][4]=0;
       
       nodos[0]="a";
@@ -195,10 +190,15 @@ public class Dijkstra{
       
       Dijkstra main = new Dijkstra(grafo, nodos);
       
+      //System.out.println("Ingrese los nodos entre los cuales quiere encontrar los caminos de costo minimo: \n");
+      //System.out.println("Nodo 1: \n");
+      //s = scan.nextInt();
+      //System.out.println("Nodo 2: \n");
+      //f = scan.nextInt();
       System.out.println("Los caminos de costo minimo son:\n");
       //for(int i=0;i<5;i++){
-        main.Djk(0,5);
-        S.clear();
+      main.Djk(0,5);
+      S.clear();
       }
       
       /*for(int i = 0; i < n; i++){
@@ -208,4 +208,3 @@ public class Dijkstra{
         System.out.println("\n");
       }*/
   }
-}
