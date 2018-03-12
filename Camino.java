@@ -29,9 +29,9 @@ public class Camino{
 
   public String toString(){
     String path = "";
-    path += this.caminito.get(0);
+    path += Dijkstra.nodos[this.caminito.get(0)];
     for(int i = 1; i < this.caminito.size(); i++)
-        path += " -> " + this.caminito.get(i);
+        path += " -> " + Dijkstra.nodos[this.caminito.get(i)];
     path += " = \t" + this.cost ;
       return path;
   }
