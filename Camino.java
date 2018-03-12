@@ -10,17 +10,20 @@ public class Camino{
     this.cost = cost;
     this.from = a;
     this.to = b;
-    if(!this.caminito.contains(a))
       this.caminito.add(a);
-    if(!this.caminito.contains(b))
       this.caminito.add(b);
   }
 
   public void add(int c, double cost){
+    int i = 1;
     if(!this.caminito.contains(c)){
-      this.caminito.add(c);
+      this.caminito.add(this.caminito.indexOf(this.to),c);
       this.cost = cost;
     }
+    /*if(!this.caminito.contains(c)){
+      this.caminito.add(c);
+
+    }*/
 
   }
 
@@ -33,6 +36,12 @@ public class Camino{
       return path;
   }
 
-
+  public void cleanPath(){
+      if(this.cost == Double.POSITIVE_INFINITY){
+        this.caminito.clear();
+        this.caminito.add(this.from);
+        this.caminito.add(this.to);
+      }
+  }
 
 }

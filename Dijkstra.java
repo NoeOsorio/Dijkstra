@@ -71,18 +71,14 @@ public class Dijkstra{
     return minimo;
   }
 
-  public String shortestPath(int w, int v, int s)
-  {
-  	String path=""+s;
-  	if(this.grafo[s][v]!=-1 && s!=w)
-  	{
-
-  	}
-  	return path;
+  public void cleanPath(){
+    for(int i = 0; i < this.caminos.size();i++){
+      (this.caminos.get(i)).cleanPath();
+    }
   }
-
   //Algoritmo principal Dijkstra Mejorado "Wink wink"
   public void Djk(int s, int n){
+
     int w;
     n=n-1;
 
@@ -90,6 +86,7 @@ public class Dijkstra{
 
     for (int i = 0; i <= n;i++){
       D[i] = this.grafo[s][i];
+      //Añade los primero caminos al Arreglo de caminos
       caminos.add(new Camino(s,i,D[i]));
     }
 
@@ -104,16 +101,19 @@ public class Dijkstra{
 
           D[v] = min(D[v], D[w] + grafo[w][v]);
           if(D[v] == D[w] + grafo[w][v]){
+            //Agrega los caminos al Arreglo de caminos
             if(this.containsPath(s,v) != -1)
+                //si existe un camino mas barato, entonces modifica el anterior
                 (this.caminos.get(this.containsPath(s,v))).add(w,D[v]);
           }
-        //shortestPath(w,v,s);
-
       }
     }
-    for(int v=0; v<D.length;v++)
+    //Con este comando se imprime la matriz T con los caminos mas baratos
+    /*for(int v=0; v<D.length;v++)
         System.out.print("|"+D[v]+"|\t");
     System.out.println("\n");
+    */
+    this.cleanPath();
   }
 
 
