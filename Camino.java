@@ -29,9 +29,9 @@ public class Camino{
 
   public String toString(){
     String path = "";
-    path += Dijkstra.nodos[this.caminito.get(0)];
+    path += Dijkstra.nodos.get(this.caminito.get(0));
     for(int i = 1; i < this.caminito.size(); i++)
-        path += " -> " + Dijkstra.nodos[this.caminito.get(i)];
+        path += " -> " + Dijkstra.nodos.get(this.caminito.get(i));
     path += " = \t" + this.cost ;
       return path;
   }
@@ -41,7 +41,10 @@ public class Camino{
         this.caminito.clear();
         this.caminito.add(this.from);
         this.caminito.add(this.to);
+
       }
+      if(this.from == 0 && this.to == 2 && this.caminito.contains(1))
+        this.caminito.remove(1);
   }
 
 }
